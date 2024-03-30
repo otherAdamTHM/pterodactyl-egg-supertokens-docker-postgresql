@@ -20,8 +20,6 @@ RUN OS= && dpkgArch="$(dpkg --print-architecture)" && \
 RUN unzip supertokens.zip
 RUN cd supertokens && ./install
 FROM debian:bookworm-slim
-USER container
-ENV  USER=container HOME=/home/container
 
 WORKDIR /home/container
 RUN groupadd supertokens && useradd -m -s /bin/bash -g supertokens supertokens
