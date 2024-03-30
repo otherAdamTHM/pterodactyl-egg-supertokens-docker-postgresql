@@ -1,4 +1,8 @@
 FROM ubuntu:bionic-20200219 as tmp
+USER container
+ENV  USER=container HOME=/home/container
+
+WORKDIR /home/container
 ARG PLUGIN_NAME=postgresql
 ARG PLAN_TYPE=FREE
 ARG CORE_VERSION=9.0.1
@@ -16,6 +20,10 @@ RUN OS= && dpkgArch="$(dpkg --print-architecture)" && \
 RUN unzip supertokens.zip
 RUN cd supertokens && ./install
 FROM debian:bookworm-slim
+USER container
+ENV  USER=container HOME=/home/container
+
+WORKDIR /home/container
 RUN groupadd supertokens && useradd -m -s /bin/bash -g supertokens supertokens
 RUN apt-get update && apt-get install -y --no-install-recommends gnupg dirmngr && rm -rf /var/lib/apt/lists/*
 ENV GOSU_VERSION 1.7
